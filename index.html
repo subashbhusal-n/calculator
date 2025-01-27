@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Modern Calculator</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="calculator">
+    <div class="display">
+      <input type="text" id="display" disabled />
+    </div>
+    <div class="buttons">
+      <button class="btn" onclick="appendValue('7')">7</button>
+      <button class="btn" onclick="appendValue('8')">8</button>
+      <button class="btn" onclick="appendValue('9')">9</button>
+      <button class="btn operator" onclick="appendValue('/')">/</button>
+
+      <button class="btn" onclick="appendValue('4')">4</button>
+      <button class="btn" onclick="appendValue('5')">5</button>
+      <button class="btn" onclick="appendValue('6')">6</button>
+      <button class="btn operator" onclick="appendValue('*')">*</button>
+
+      <button class="btn" onclick="appendValue('1')">1</button>
+      <button class="btn" onclick="appendValue('2')">2</button>
+      <button class="btn" onclick="appendValue('3')">3</button>
+      <button class="btn operator" onclick="appendValue('-')">-</button>
+
+      <button class="btn" onclick="appendValue('0')">0</button>
+      <button class="btn" onclick="appendValue('.')">.</button>
+      <button class="btn" onclick="clearDisplay()">C</button>
+      <button class="btn operator" onclick="appendValue('+')">+</button>
+
+      <button class="btn operator" onclick="calculate()">=</button>
+      <button class="btn operator" onclick="sqrt()">√</button>
+      <button class="btn operator" onclick="power()">^</button>
+      <button class="btn operator" onclick="percent()">%</button>
+
+      <button class="btn operator" onclick="sin()">sin</button>
+      <button class="btn operator" onclick="cos()">cos</button>
+      <button class="btn operator" onclick="tan()">tan</button>
+    </div>
+  </div>
+
+  <script >
+    // script.js
+
+let currentInput = '';
+let operator = '';
+let firstOperand = '';
+let secondOperand = '';
+
+function appendValue(value) {
+  currentInput += value;
+  document.getElementById('display').value = currentInput;
+}
+
+function clearDisplay() {
+  currentInput = '';
+  firstOperand = '';
+  secondOperand = '';
+  operator = '';
+  document.getElementById('display').value = '';
+}
+
+function calculate() {
+  if (operator === '') return;
+  secondOperand = currentInput;
+  let result;
+  
+  switch (operator) {
+    case '+':
+      result = parseFloat(firstOperand) + parseFloat(secondOperand);
+      break;
+    case '-':
+      result = parseFloat(firstOperand) - parseFloat(secondOperand);
+      break;
+    case '*':
+      result = parseFloat(firstOperand) * parseFloat(secondOperand);
+      break;
+    case '/':
+      result = parseFloat(firstOperand) / parseFloat(secondOperand);
+      break;
+    case '%':
+      result = (parseFloat(firstOperand) * parseFloat(secondOperand)) / 100;
+      break;
+    case '^':
+      result = Math.pow(parseFloat(firstOperand), parseFloat(secondOperand));
+      break;
+    default:
+      return;
+  }
+  
+  currentInput = result.toString();
+  operator = '';
+  firstOperand = '';
+  secondOperand = '';
+  document.getElementById('display').value = currentInput;
+}
+
+function sqrt() {
+  currentInput = Math.sqrt(parseFloat(currentInput)).toString();
+  document.getElementById('display').value = currentInput;
+}
+
+function power() {
+  firstOperand = currentInput;
+  operator = '^';
+  currentInput = '';
+}
+
+function percent() {
+  firstOperand = currentInput;
+  operator = '%';
+  currentInput = '';
+}
+
+function sin() {
+  currentInput = Math.sin(degreesToRadians(parseFloat(currentInput))).toString();
+  document.getElementById('display').value = currentInput;
+}
+
+function cos() {
+  currentInput = Math.cos(degreesToRadians(parseFloat(currentInput))).toString();
+  document.getElementById('display').value = currentInput;
+}
+
+function tan() {
+  currentInput = Math.tan(degreesToRadians(parseFloat(currentInput))).toString();
+  document.getElementById('display').value = currentInput;
+}
+
+function degreesToRadians(degrees) {
+  return degrees * (Math.PI / 180);
+}
+
+  </script>
+</body>
+</html>
